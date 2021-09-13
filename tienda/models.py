@@ -18,7 +18,6 @@ class Producto(models.Model):
     precio = models.DecimalField(max_digits=6, decimal_places=2)
     status = models.BooleanField(default=False)
     categoria_p = models.ForeignKey(Categoria, related_name='productos_p', on_delete=models.CASCADE)
-    categoria_s = models.ManyToManyField(Categoria, blank=True)
     stock = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -83,6 +82,7 @@ class OrdenItem(models.Model):
     def __str__(self):
         txt="{0} {1}"
         return txt.format (self.cantidad, self.producto.titulo) 
+    
 
     def precio_previo(self):
         return self.cantidad * self.producto.precio

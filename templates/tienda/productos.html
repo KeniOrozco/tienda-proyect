@@ -1,14 +1,10 @@
 {% extends "base.html" %}
-
 {% block content %}
-
 <div class="bg-light py-3">
     <div class="container">
         <div class="row">
             <div class="col-md-12 mb-0">
-                <a href={% url 'home' %}">Home</a>
-                <span class="mx-2 mb-0">/</span>
-                <strong class="text-block">Shop</strong>
+                <h3 class="card-title" style="color: #6a0137; text-align: center;">Nuestros productos</h3>
             </div>
         </div>
     </div>
@@ -16,40 +12,70 @@
 
 <div class="site-section">
     <div class="container">
-        <div class="row mb-5">
+        <div class="card-deck">
+            {% for producto in productos %}
+            <div class="card " style="width: 15rem;">
+                <img src="{{ producto.imagen.url }}" class="card-img-top" alt="prducto">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #6a0137;">{{ producto.titulo }}</h5>
+                     <p class="card-text">{{ producto.descripcion }} </p>
+                    <h5 class="mb-8" style="text-align: right;">Q {{ producto.precio }}</h5>
+                    <!--- Obtender detalle del producto-->
+                    <a href="#" class="btn btn-secondary">Ver más</a>
 
-            {% for product in object_list %}
-                <div class="col-md-9 mb-4" data-aos='fade-up'>
-
-                    <figure class"block-4-image">
-                        <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="img-fluid"></a>
-                    </figure>
-
-                    <div class="bloc-4-text p-4"></div>
-                    <a href="{{ product.get_absolute_url }}"><h3>{{ product.title }}</h3></a>
-                    <p class="mb-0">{{ product.description }}</p>
-                </div>
-            {% endfor %}
-            
-            <div class="col-md-3 mb-4">
-                <div class="border p-4 rounded mb-4">
-                    <h3 class="h6 text-uppercasse text-black">Categories</h3>
-                    <ul>
-                        {% for category in categories %}
-                        <li class="mb-1">
-                            <a href="?category={{ category.name }}" class="d-flex">
-                                <span>{{ category.name }}</span>
-                            </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
                 </div>
             </div>
-            
+            {% endfor %}
+
+            <ul class="list-group">
+                <h3 class="h6 text-uppercasse text-black">Categorias</h3>
+                {% for categoria in categorias %}
+                <li class="list-group-item"> <a href="?categoria={{ categoria.nombre }}" style="color: #6a0137;" class="d-flex">
+                    <span>{{ categoria.nombre }}</span>
+                </a> 
+            </li>
+                {% endfor %} 
+              </ul>
+
+           
         </div>
     </div>
 </div>
-
-
+<!--paginacion -->
+<nav aria-label="Page navigation example" style="color: #6a0137;">
+    <ul class="pagination justify-content-center"   >
+        {% if productos.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ movies.previous_page_number }}" >Anterior</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+        </li>
+        {% endif %}
+        {% for i in productos.paginator.page_range %}
+        {% if productos.number == i %}
+            <li class="page-item active" aria-current="page">
+            <span class="page-link">
+                {{ i }}
+                <span class="sr-only">(current)</span>
+            </span>
+            </li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if productos.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ movies.next_page_number }}">Siguiente</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Siguiente</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- Fin paginacion-->
 
 {% endblock content %}
