@@ -22,5 +22,6 @@ def producto_list(request):
     return render(request, 'tienda/productos.html', {'productos': producto, 'categorias': categoria, 'productos': page_obj})
 
 #obtener el detalle de un producto
-class ProductDetailView(generic.FormView):
-    template_name = 'cart/product_detail.html'
+def producto_detalle(request,pk): 
+    producto = Producto.objects.get(pk=pk)
+    return render(request, 'tienda/producto_detalle.html',{'producto': producto})

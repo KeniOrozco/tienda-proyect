@@ -21,7 +21,7 @@
                      <p class="card-text">{{ producto.descripcion }} </p>
                     <h5 class="mb-8" style="text-align: right;">Q {{ producto.precio }}</h5>
                     <!--- Obtender detalle del producto-->
-                    <a href="#" class="btn btn-secondary">Ver más</a>
+                    <a href="{{ producto.pk }}" class="btn btn-secondary">Ver más</a>
 
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <ul class="list-group">
                 <h3 class="h6 text-uppercasse text-black">Categorias</h3>
                 {% for categoria in categorias %}
-                <li class="list-group-item"> <a href="?categoria={{ categoria.nombre }}" style="color: #6a0137;" class="d-flex">
+                <li class="list-group-item"> <a href="?categoria={{ categoria.pk }}" style="color: #6a0137;" class="d-flex">
                     <span>{{ categoria.nombre }}</span>
                 </a> 
             </li>
