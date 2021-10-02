@@ -8,5 +8,6 @@ from .models import (
 )
 admin.site.register(Producto)
 admin.site.register(Orden)
+admin.site.register(Direccion)
 admin.site.register(OrdenItem)
 admin.site.register(Categoria)

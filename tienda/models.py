@@ -12,7 +12,6 @@ class Categoria(models.Model):
 
 class Producto(models.Model): 
     titulo = models.CharField(max_length=150)
-    slug_name = models.SlugField(unique=True)
     imagen = models.ImageField(upload_to='producto_imagen')
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=6, decimal_places=2)
@@ -27,8 +26,8 @@ class Producto(models.Model):
     def get_absolute_url(self):
         return reverse("tienda:producto-detail", kwargs={'slug_name': self.slug_name})
     @property
-    def in_stock(self):
-        return self.stock > 0
+    def en_stock(self):
+        return self.stock > 5
 
 class Direccion(models.Model): 
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
@@ -38,10 +37,11 @@ class Direccion(models.Model):
     direccion = models.CharField(max_length=150) 
     referencia = models.CharField(max_length=150) 
     ciudad = models.CharField(max_length=150) 
-    PAIS= (
+    PAIS= [
         ('0', 'GUATEMALA'),
-    )
-    REGION= (
+     ]
+    pais = models.IntegerField(choices=PAIS, null=False, blank=False)
+    REGION= [ 
         ('0', 'Alta Verapaz'),
         ('1', 'Baja Verapaz'),
         ('2', 'Chimaltenago'),
@@ -64,7 +64,8 @@ class Direccion(models.Model):
         ('19', 'Suchitepequez'),
         ('20', 'Totonicapán'),
         ('21', 'Zacapa'),
-    )
+    ]
+    region = models.IntegerField(choices=REGION, null=False, blank=False)
     zipcode = models.CharField(max_length=6) 
 
     def __str__(self):
@@ -75,7 +76,7 @@ class Direccion(models.Model):
         verbose_name_plural = 'Direcciones'
 
 class OrdenItem(models.Model):
-    orden = models.ForeignKey("Orden", related_name='items', on_delete=models.CASCADE)
+  
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField(default = 1)
 
@@ -98,8 +99,7 @@ class Orden(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     fecha_orden = models.DateTimeField(blank=True, null=True)
     status_orden = models.BooleanField(default=False)
-    direccion_envio = models.ForeignKey(
-        Direccion, related_name='direccion_envio', blank=True, null=True, on_delete=models.SET_NULL)
+    direccion_envio = models.ForeignKey(Direccion, related_name='direccion_envio', blank=True, null=True, on_delete=models.SET_NULL)
    
 
     def __str__(self):

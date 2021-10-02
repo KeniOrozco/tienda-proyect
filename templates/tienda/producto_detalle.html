@@ -4,7 +4,8 @@
 
 <div class="site-section">
     <div class="container">
-        <div class="row mb-5">
+        
+        <div class="row-fluid ">
 
             <div class="col-md-6">
 
@@ -14,14 +15,22 @@
                 <div class="col-md-6 mb-4" data-aos='fade-up'>
 
 
-                    <h5 class="card-title" style="color: #6a0137;">{{ producto.titulo }}</h5>
+                    <h2 class="card-title" style="color: #6a0137;">{{ producto.titulo }}</h2>
                     <p class="card-text">{{ producto.descripcion }} </p>
-                    <p  style="color: #6a0137;">Unidades disponibles: {{ producto.stock }}</p>
+                    {% if producto.en_stock %}
+                    <h8 style="color: #6a0137;" >Disponibles: {{ producto.stock }}</h8> 
                     <h5 class="mb-8" style="text-align: right;">Q {{ producto.precio }}</h5>
-                    <a href="#" class="btn btn-secondary">Agregar al carrito</a> 
-                    <h5 class="mb-8" style="text-align: right;"><a style="color: #6a0137;" href="{% url 'productos'%}">Volver</a></h5>
-                    
-                   
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type='submit' class="btn btn-sm btn-secondary buy-now">Agregar al carrito</button>
+                    </form>
+                    {% else %}
+                    <h8 style="color: #6a0137;" >{{ producto.titulo }} || Agotado</h8>
+                    <h5 class="mb-8" style="text-align: right;">Q {{ producto.precio }}</h5>
+                    {% endif %}
+
+                    <h5 class="mb-8" style="text-align: right;"><a style="color: #6a0137;" href="{% url 'productos' %}">Volver</a></h5>
 
                 </div>
             
@@ -30,7 +39,5 @@
         </div>
     </div>
 </div>
-
-
 
 {% endblock content %}

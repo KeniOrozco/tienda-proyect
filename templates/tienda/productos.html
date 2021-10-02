@@ -13,7 +13,19 @@
 <div class="site-section">
     <div class="container">
         <div class="card-deck">
+
+
+            <ul class="list-group">
+                <h3 class="h6 text-uppercasse text-black">Categorias</h3>
+                {% for categoria in categorias %}
+                    <li class="list-group-item"> <a href="?categoria={{ categoria.pk }}" style="color: #6a0137;" class="d-flex">
+                        <span>{{ categoria.nombre }}</span></a> 
+                    </li>
+                {% endfor %} 
+            </ul>
+
             {% for producto in productos %}
+
             <div class="card " style="width: 15rem;">
                 <img src="{{ producto.imagen.url }}" class="card-img-top" alt="prducto">
                 <div class="card-body">
@@ -27,15 +39,6 @@
             </div>
             {% endfor %}
 
-            <ul class="list-group">
-                <h3 class="h6 text-uppercasse text-black">Categorias</h3>
-                {% for categoria in categorias %}
-                <li class="list-group-item"> <a href="?categoria={{ categoria.pk }}" style="color: #6a0137;" class="d-flex">
-                    <span>{{ categoria.nombre }}</span>
-                </a> 
-            </li>
-                {% endfor %} 
-              </ul>
 
            
         </div>

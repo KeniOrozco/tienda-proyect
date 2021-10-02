@@ -1,5 +1,4 @@
 import os
-
 from pathlib import Path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-gi=@a-*s!)alz)#!8s&x7t3@u#h!b02j4qy3$#ky10ooc13#sl'
@@ -17,7 +16,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tienda',
     'core',
-    "bootstrap5",
+#Crispy forms se usara para los formularios
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +52,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'glealways',
+        'NAME': 'tienda',
         'USER': 'root',
         'PASSWORD':'F3rkr5@70',
     }
